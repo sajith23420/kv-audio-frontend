@@ -1,13 +1,33 @@
 import './App.css';
-import { MdOutlineBluetoothAudio } from "react-icons/md";
+import { BsGraphDownArrow } from "react-icons/bs";
+import { FaRegBookmark } from "react-icons/fa";
+import { MdOutlineSpeaker } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
+
 
 function App() {
   return (
     <div className="w-full h-screen flex">
       <div className="w-[400px] h-full bg-green-200">
+        <button className="w-full h-[40px] text-[25px] font-bold  flex justify-center items-center">
+          <BsGraphDownArrow/>
+          Dashboard
+        </button>
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <FaRegBookmark/>
+          Bookings
+        </button>
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <MdOutlineSpeaker/>
+          Items
+        </button>
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <FaRegUser/>
+          Users
+        </button>
       </div>
       <div className='w-full bg-red-900'>
-      <MdOutlineBluetoothAudio className='text-[300px] text-white'/>
+      
 
       </div>
     </div>
