@@ -1,3 +1,8 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { CiCirclePlus } from "react-icons/ci";
+import { Link, useNavigate } from "react-router-dom";
+
 const sampleArr = [
     {
         key: "P001",
@@ -49,50 +54,106 @@ const sampleArr = [
         availability: true,
         Image: ["https://example.com/notebook.jpg"]
     }
-]
-
-import { useState } from "react";
-import { CiCirclePlus } from "react-icons/ci";
-import { Link } from "react-router-dom";
+];
 
 export default function AdminItemsPage() {
-    const [items, setItems] = useState(sampleArr)
+    const [items, setItems] = useState(sampleArr);
+    const [itemsLoaded, setItemsLoaded] = useState(false); // State to track if items are loaded
+    const navigate = useNavigate();
 
-    return(
-        <div className="w-full h-full relative">
-            <table>
-                <thead>
-                    <th>Key</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Dimensions</th>
-                    <th>Availability</th>
-                </thead>
-                <tbody>
-                    {
-                         items.map((product)=>{
-                            console.log(product)
-                            return(
-                                <tr key={product.key} className="hover:bg-gray-200 cursor-pointer">
-                                    <td>{product.key}</td>
-                                    <td>{product.name}</td>
-                                    <td>${product.price}</td>
-                                    <td>{product.category}</td>
-                                    <td>{product.dimensions}</td>
-                                    <td>{product.availability ? "Available" : "Unavailable"}</td>
-                                </tr>
-                            )
+    useEffect(() => {
 
-                         })
-                    }
-                </tbody>
+        if (!itemsLoaded) {
+            const token = localStorage.getItem("token");
+            axios.get("http://localhost:3000/api/products", {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    setItems(res.data);
+                    setItemsLoaded(true); // Reset itemsLoaded to false after fetching
+                })
+                .catch((err) => {
+                    console.error(err); 
+                });
 
-            </table>
+
+        }
+
+    }, [itemsLoaded]); // Add itemsLoaded to the dependency arra
+
+    const handleEdit = (key) => {
+        navigate(`/admin/items/edit/${key}`);
+    };
+
+    const handleDelete = (key) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+        if (confirmDelete) {
+            setItems(prev => prev.filter(item => item.key !== key));
+            const token = localStorage.getItem("token");
+            axios.delete(`http://localhost:3000/api/products/${key}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    setItemsLoaded(false); // Toggle itemsLoaded to trigger useEffect
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
+    };
+
+    return (
+        <div className="w-full h-full p-4 relative flex  flex-col items-center">
+            {!itemsLoaded &&<div className="border-4 my-4 border-b-green-500 bg-0 w-[100px] h-[100px] rounded-full animate-spin"></div>}
+            {itemsLoaded &&<div className="overflow-x-auto">
+                <table className="min-w-full border border-gray-200 rounded shadow-sm overflow-hidden">
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="text-left p-3 border-b">Key</th>
+                            <th className="text-left p-3 border-b">Name</th>
+                            <th className="text-left p-3 border-b">Price</th>
+                            <th className="text-left p-3 border-b">Category</th>
+                            <th className="text-left p-3 border-b">Dimensions</th>
+                            <th className="text-left p-3 border-b">Availability</th>
+                            <th className="text-left p-3 border-b">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.map((product) => (
+                            <tr key={product.key} className="hover:bg-gray-50 border-b">
+                                <td className="p-3">{product.key}</td>
+                                <td className="p-3">{product.name}</td>
+                                <td className="p-3">${product.price}</td>
+                                <td className="p-3">{product.category}</td>
+                                <td className="p-3">{product.dimensions}</td>
+                                <td className="p-3">{product.availability ? "Available" : "Unavailable"}</td>
+                                <td className="p-3 border flex justify-center gap-2">
+                                    <button
+                                        onClick={() => {
+                                            navigate(`/admin/items/edit`, {state:product} )
+                                        }}
+                                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(product.key)}
+                                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>}
+
             <Link to="/admin/items/add">
-            <CiCirclePlus className="text-[70px] absolute right-2 bottom-2 hover:text-red-600"/>
+                <CiCirclePlus className="text-[70px] absolute right-4 bottom-4 text-gray-700 hover:text-red-600" />
             </Link>
-            
         </div>
-    )
+    );
 }
