@@ -18,7 +18,7 @@ export default function UpdateItemPage() {
     const [productDimensions, setProductDimensions] = useState(location.state.dimensions);
     const [productDescription, setProductDescription] = useState(location.state.description);
     const navigate = useNavigate()
-    
+
 
     async function handleAddItem() {
         console.log(productKey, productName, productPrice, productCategory, productDimensions, productDescription);
@@ -27,7 +27,7 @@ export default function UpdateItemPage() {
         if (token) {
             try {
 
-                const result = await axios.put("http://localhost:3000/api/products/"+productKey, {
+                const result = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/${productKey}`, {
                     key: productKey,
                     name: productName,
                     price: productPrice,
@@ -46,7 +46,7 @@ export default function UpdateItemPage() {
 
 
             } catch (err) {
-                
+
                 toast.error(err.response.data.error);
             }
 
@@ -99,7 +99,8 @@ export default function UpdateItemPage() {
                     placeholder="Product Dimensions"
                     value={productDimensions}
                     onChange={(e) => setProductDimensions(e.target.value)}
-                    className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+                    className="w-full
+                     p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
                 />
                 <textarea
                     type="text"
@@ -110,7 +111,7 @@ export default function UpdateItemPage() {
                 />
                 <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-all">Update</button>
 
-                <button onClick={()=>{navigate("/admin/items")}} className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition-all">Cancel</button>
+                <button onClick={() => { navigate("/admin/items") }} className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition-all">Cancel</button>
             </div>
         </div>
     );
