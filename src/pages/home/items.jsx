@@ -2,28 +2,28 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import ProductCard from "../../components/productCard"
 
-export default function Items(){
-    const [state,setState] = useState ("loading")//loading , success , error
-    const [items,setItems] = useState([])
-   
+export default function Items() {
+    const [state, setState] = useState("loading")//loading , success , error
+    const [items, setItems] = useState([])
+
     useEffect(() => {
-        if(state == "loading"){
+        if (state == "loading") {
             axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`
 
-            ).then((res)=>{
+            ).then((res) => {
                 console.log(res.data)
                 setItems(res.data)
                 setState("success")
 
-            }).catch((err)=>{
+            }).catch((err) => {
                 toast.error(err?.response?.data?.error || "An error occurred")
                 setState("error")
             })
         }
-    },[]) 
+    }, [])
 
-    return(
-        <div className="w-full h-full flex flex-wrap justify-center pt-[50px]">
+    return (
+        <div className="w-full h-full flex flex-wrap justify-left pt-[50px]">
             {
                 state == "loading" &&
                 <div className="w-full h-full  flex justify-center items-center">
@@ -33,10 +33,10 @@ export default function Items(){
 
             }
             {
-                state=="success" &&
+                state == "success" &&
                 items.map((item) => {
-                    return(
-                        <ProductCard key={item.key} item={item}/>  
+                    return (
+                        <ProductCard key={item.key} item={item} />
                     )
 
                 })
