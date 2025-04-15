@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import mediaUpload from "../../utils/mediaUpload";
 
 export default function AddItemPage() {
     const [productKey, setProductKey] = useState("");
@@ -10,14 +11,43 @@ export default function AddItemPage() {
     const [productCategory, setProductCategory] = useState("");
     const [productDimensions, setProductDimensions] = useState("");
     const [productDescription, setProductDescription] = useState("");
+    const [productImage, setProductImage] = useState();
     const navigate = useNavigate()
 
     async function handleAddItem() {
-        console.log(productKey, productName, productPrice, productCategory, productDimensions, productDescription);
+
+        const promises = [];
+
+        for (let i = 0; i < productImage.length; i++) {
+            console.log(productImage[i])
+            const promise = mediaUpload(productImage[i])
+            promises.push(promise);
+            // if(i == 5){
+            //     toast.error("You can only upload 5 images");
+            //     break;
+            // }
+        }
+
+
+        console.log(productKey,
+            productName,
+            productPrice,
+            productCategory,
+            productDimensions,
+            productDescription);
 
         const token = localStorage.getItem("token");
         if (token) {
             try {
+                
+                // Promise.all(promises).then((result) => {
+                //     console.log(result)
+
+                // }).catch((err) => {
+                //     toast.error(err)
+                // })
+
+                const imageUrls = await Promise.all(promises);
 
                 const result = await axios.post(
                     `${import.meta.env.VITE_BACKEND_URL}/api/products`, {
@@ -27,7 +57,8 @@ export default function AddItemPage() {
                     category: productCategory,
                     dimensions: productDimensions,
                     description: productDescription,
-
+                    Image: imageUrls,
+                    
                 }, {
                     headers: {
                         Authorization: "Bearer " + token
@@ -39,7 +70,7 @@ export default function AddItemPage() {
 
 
             } catch (err) {
-                
+
                 toast.error(err.response.data.error);
             }
 
@@ -93,16 +124,17 @@ export default function AddItemPage() {
                     onChange={(e) => setProductDimensions(e.target.value)}
                     className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
                 />
-                <input
+                <textarea
                     type="text"
                     placeholder="Product Description"
                     value={productDescription}
                     onChange={(e) => setProductDescription(e.target.value)}
                     className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
                 />
+                <input type="file" multiple onChange={(e) => { setProductImage(e.target.files) }} className="w-full p-2 border rounded" />
                 <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-all">Add</button>
 
-                <button onClick={()=>{navigate("/admin/items")}} className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition-all">Cancel</button>
+                <button onClick={() => { navigate("/admin/items") }} className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition-all">Cancel</button>
             </div>
         </div>
     );
