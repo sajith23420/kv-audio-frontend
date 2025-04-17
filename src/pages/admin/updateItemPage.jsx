@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import mediaUpload from "../../utils/mediaUpload";
 
 
 
@@ -17,11 +18,30 @@ export default function UpdateItemPage() {
     const [productCategory, setProductCategory] = useState(location.state.category);
     const [productDimensions, setProductDimensions] = useState(location.state.dimensions);
     const [productDescription, setProductDescription] = useState(location.state.description);
+    const [productImage, setProductImage] = useState([]);
+
     const navigate = useNavigate()
 
 
-    async function handleAddItem() {
-        console.log(productKey, productName, productPrice, productCategory, productDimensions, productDescription);
+    async function handleUpdateItem() {
+        
+        let updatingImages = location.state.Image || [];
+
+        if (productImage.length > 0) {
+            const promises = [];
+
+            for (let i = 0; i < productImage.length; i++) {
+                console.log(productImage[i])
+                const promise = mediaUpload(productImage[i])
+                promises.push(promise);
+                
+            }
+
+            updatingImages = await Promise.all(promises);
+        }
+
+
+        console.log(productKey, productName, productPrice, productCategory, productDimensions, productDescription,productImage );
 
         const token = localStorage.getItem("token");
         if (token) {
@@ -34,10 +54,13 @@ export default function UpdateItemPage() {
                     category: productCategory,
                     dimensions: productDimensions,
                     description: productDescription,
+                    Image: updatingImages
+                   
 
-                }, {
+                },
+                 {
                     headers: {
-                        Authorization: "Bearer " + token
+                        Authorization: "Bearer " + token,
                     },
                 }
                 );
@@ -109,7 +132,13 @@ export default function UpdateItemPage() {
                     onChange={(e) => setProductDescription(e.target.value)}
                     className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
                 />
-                <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-all">Update</button>
+                <input type="file"
+                 multiple 
+                 onChange={(e) => {      setProductImage(e.target.files) }} 
+                 className="w-full p-2 border rounded"
+                />
+
+                <button onClick={handleUpdateItem} className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-all">Update</button>
 
                 <button onClick={() => { navigate("/admin/items") }} className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition-all">Cancel</button>
             </div>
