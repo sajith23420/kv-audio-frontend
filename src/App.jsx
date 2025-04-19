@@ -12,21 +12,22 @@ import { Toaster } from 'react-hot-toast';
 import RegisterPage from './pages/register/register';
 
 
+
 function App() {
   return (
     <BrowserRouter>
-      <Toaster position='top-right'/>
+      <Toaster position='top-right' />
       <Routes path="/*">
-        <Route path="/testing" element={<Testing/>}/>
-        <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/register" element={<RegisterPage/>}/>
-        <Route path="/admin/*" element={<AdminPage/>}/>
-        <Route path="/*" element={<HomePage/>}/>       
+        <Route path="/testing" element={<Testing />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/admin/*" element={<AdminPage />} />
+        <Route path="/*" element={<HomePage />} />
       </Routes>
-    
-    </BrowserRouter>  
 
-  )
+    </BrowserRouter>
+
+  ) 
 }
 
 export default App

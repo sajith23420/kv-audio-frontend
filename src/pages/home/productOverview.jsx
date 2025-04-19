@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../../components/imageSlider";
+import { addToCart, loadCart } from "../../utils/cart";
 
 export default function ProductOverview() {
     const params = useParams();
@@ -46,6 +47,10 @@ export default function ProductOverview() {
                         <div className="mt-4 text-sm text-gray-600">{/* Additional info can go here */}
                             <span className="font-medium">Dimensions:</span> {product.dimensions}
                         </div>
+                        <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300" onClick={()=>{
+                            addToCart(product.key, 1);
+                            console.log(loadCart())
+                        }}>Add to Cart</button>
                     </div>
 
 
