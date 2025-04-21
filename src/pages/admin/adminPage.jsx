@@ -1,47 +1,79 @@
 import { BsGraphDownArrow } from "react-icons/bs";
 import { FaRegBookmark, FaRegUser } from "react-icons/fa";
 import { MdOutlineSpeaker } from "react-icons/md";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import AdminItemsPage from "./adminItemsPage";
 import AddItemPage from "./addItemPage";
 import UpdateItemPage from "./updateItemPage";
+import AdminUsersPage from "./adminUsersPage";
+import AdminOrdersPage from "./adminBookingPage";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function AdminPage() {
+  const [userValidated, setUserValidated] = useState(false);
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if(!token){
+      window.location.href = "/login";
+    }
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+
+    }).then((res)=>{
+      console.log(res.data);
+      const user = res.data;
+      if(user.role == "admin"){
+        setUserValidated(true)
+        
+      }else{
+        window.location.href = "/"
+      }
+     
+
+    }).catch((err)=>{
+      console.error(err);
+      setUserValidated(false)
+    })
+  },[])
+
   return (
     <div className="w-full h-screen flex">
       <div className="w-[200px] h-full bg-green-200">
-        <button className="w-full h-[40px] text-[25px] font-bold  flex justify-center items-center">
-          <BsGraphDownArrow/>
+        <Link to="/admin/dashboard" className="w-full h-[40px] text-[25px] font-bold  flex justify-center items-center">
+          <BsGraphDownArrow />
           Dashboard
-        </button>
-        <a href="/admin/bookings" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
-          <FaRegBookmark/>
-          Bookings
-        </a>
-        <a href="/admin/items" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
-          <MdOutlineSpeaker/>
+        </Link>
+        <Link to="/admin/orders" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <FaRegBookmark />
+          Orders
+        </Link>
+        <Link to="/admin/items" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <MdOutlineSpeaker />
           Items
-        </a>
-        <a href="/admin/Users" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
-          <FaRegUser/>
+        </Link>
+        <Link to="/admin/users" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <FaRegUser />
           Users
-        </a>
+        </Link>
       </div>
 
-      <div className='w-[calc(100vw-200px)] '>  
-        <Routes path="/*">
-        <Route path="/bookings" element={<h1>Bookings</h1>}/>
-        <Route path="/items" element={<AdminItemsPage/>}/>
-        <Route path="/Users" element={<h1>Users</h1>} />
-        <Route path="/items/add" element={<AddItemPage/>} />
-        <Route path ="/items/edit" element={<UpdateItemPage/>}/>
-        </Routes>
-       
-       </div>
-      
+      <div className='w-[calc(100vw-200px)] '>
+        {userValidated&&<Routes path="/*">
+          <Route path="/orders" element={<AdminOrdersPage />} />
+          <Route path="/items" element={<AdminItemsPage />} />
+          <Route path="/users" element={<AdminUsersPage />} />
+          <Route path="/items/add" element={<AddItemPage />} />
+          <Route path="/items/edit" element={<UpdateItemPage />} />
+        </Routes>}
 
       </div>
-    
+
+
+    </div>
+
 
   )
 }
