@@ -5,7 +5,7 @@ export default function ProductCard(props) {
     const item = props.item;
 
     return (
-        <div className="w-[200px] rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-2xl transition-shadow duration-300 p-4 m-4 relative" >
+        <div className="w-[200px] h-[400px] rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-2xl transition-shadow duration-300 p-4 m-4 relative" >
             <img
                 className="w-full h-48 object-cover rounded-lg"
                 src={item.Image[0]}

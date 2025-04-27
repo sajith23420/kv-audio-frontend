@@ -27,67 +27,71 @@ export default function BookingItem({ itemKey, qty, refresh }) {
     if (status !== "success") return null;
 
     return (
-        <div className="flex gap-5 items-center bg-secondary rounded-xl p-4 shadow-md mb-4 w-full max-w-2xl relative">
-            <div className="absolute  right-[-45px] cursor-pointer hover:text-white hover:bg-red-500  text-red-400 p-[10px] rounded-full">
-                <FaTrash
-                    onClick={() => {
-                        removeFromCart(itemKey);
-                        window.location.reload();
-                    }}
+        <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl p-4 mb-4 flex flex-col md:flex-row gap-4 items-center">
+            {/* Product Image */}
+            <div className="w-[150px]  md:w-[120px] md:mt-4 flex-shrink-0">
+                <img
+                    src={item?.Image[0]}
+                    alt={item?.name}
+                    className="w-full h-[120px] object-cover rounded-lg"
                 />
             </div>
-            {/* Image */}
-            <img
-                src={item?.Image[0]}
-                alt={item?.name}
-                className="w-20 h-20 object-cover rounded-xl"
-            />
 
-            {/* Details */}
-            <div className="flex flex-row items-center justify-between w-full">
-                {/* Product Name */}
-                <h3 className="text-lg font-semibold text-accent w-40 truncate">
-                    {item?.name}
-                </h3>
-
-                {/* Unit Price */}
-                <div className="text-sm text-gray-500 w-[80px] text-center">
-                    Rs. {item?.price.toFixed(2)} /unit
-                </div>
-
-                {/* Quantity Controls */}
-                <div className="relative w-[40px] text-center flex items-center justify-center text-sm text-gray-700">
+            {/* Product Details */}
+            <div className="flex flex-col justify-between w-full gap-2">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <h3 className="text-lg font-bold text-accent">{item?.name}</h3>
+                        <p className="text-sm text-gray-500">{item?.category}</p>
+                        <p className="text-sm text-gray-700 mt-1">
+                            Rs. {item?.price.toFixed(2)} / unit
+                        </p>
+                    </div>
                     <button
-                        className="absolute top-[-20px] hover:text-accent "
+                        className="text-red-500 hover:text-white hover:bg-red-500 p-2 rounded-full transition"
                         onClick={() => {
-                            addToCart(itemKey, 1);
-                            toast.success("Item added to cart");
-                            refresh();
-
-
-                        }}>
-
-                        <FaArrowUp />
-                    </button>
-                    {qty}
-                    <button
-                        className="absolute bottom-[-20px] hover:text-accent"
-                        onClick={() => {
-                            if (qty === 1) {
-                                removeFromCart(itemKey);
-                            } else {
-                                addToCart(itemKey, -1);
-                            }
-                            refresh();
+                            removeFromCart(itemKey);
+                            window.location.reload();
                         }}
                     >
-                        <FaArrowDown />
+                        <FaTrash />
                     </button>
                 </div>
 
-                {/* Total Price */}
-                <div className="font-bold text-accent w-[100px] text-right">
-                    Rs. {(item?.price * qty).toFixed(2)}
+                {/* Quantity & Total */}
+                <div className="flex justify-between items-center mt-2">
+                    {/* Quantity Controller */}
+                    <div className="flex flex-row items-center">
+                        <button
+                            className="p-1 text-accent hover:text-blue-600"
+                            onClick={() => {
+                                addToCart(itemKey, 1);
+                                toast.success("Item added");
+                                refresh();
+                            }}
+                        >
+                            <FaArrowUp />
+                        </button>
+                        <span className="text-sm">{qty}</span>
+                        <button
+                            className="p-1 text-accent hover:text-blue-600"
+                            onClick={() => {
+                                if (qty === 1) {
+                                    removeFromCart(itemKey);
+                                } else {
+                                    addToCart(itemKey, -1);
+                                }
+                                refresh();
+                            }}
+                        >
+                            <FaArrowDown />
+                        </button>
+                    </div>
+
+                    {/* Total */}
+                    <div className="text-right font-bold text-accent text-sm md:text-base">
+                        Total: Rs. {(item?.price * qty).toFixed(2)}
+                    </div>
                 </div>
             </div>
         </div>
