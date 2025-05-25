@@ -27,7 +27,7 @@ export default function BookingItem({ itemKey, qty, refresh }) {
     if (status !== "success") return null;
 
     return (
-        <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl p-4 mb-4 flex flex-col md:flex-row gap-4 items-center">
+        <div className="w-full max-w-2xl bg-transparent shadow-lg rounded-xl p-4 mb-4 flex flex-col md:flex-row gap-4 items-center">
             {/* Product Image */}
             <div className="w-[150px]  md:w-[120px] md:mt-4 flex-shrink-0">
                 <img
@@ -41,9 +41,9 @@ export default function BookingItem({ itemKey, qty, refresh }) {
             <div className="flex flex-col justify-between w-full gap-2">
                 <div className="flex justify-between items-start">
                     <div>
-                        <h3 className="text-lg font-bold text-accent">{item?.name}</h3>
-                        <p className="text-sm text-gray-500">{item?.category}</p>
-                        <p className="text-sm text-gray-700 mt-1">
+                        <h3 className="text-lg font-bold text-white">{item?.name}</h3>
+                        <p className="text-sm text-white">{item?.category}</p>
+                        <p className="text-sm text-white mt-1">
                             Rs. {item?.price.toFixed(2)} / unit
                         </p>
                     </div>
@@ -72,7 +72,7 @@ export default function BookingItem({ itemKey, qty, refresh }) {
                         >
                             <FaArrowUp />
                         </button>
-                        <span className="text-sm">{qty}</span>
+                        <span className="text-sm text-white">{qty}</span>
                         <button
                             className="p-1 text-accent hover:text-blue-600"
                             onClick={() => {
@@ -89,7 +89,7 @@ export default function BookingItem({ itemKey, qty, refresh }) {
                     </div>
 
                     {/* Total */}
-                    <div className="text-right font-bold text-accent text-sm md:text-base">
+                    <div className="text-right font-bold text-white text-sm md:text-base">
                         Total: Rs. {(item?.price * qty).toFixed(2)}
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaCartShopping, FaRightToBracket, FaUserPlus } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
@@ -6,7 +6,30 @@ import MobileNavPanel from "./mobileNavPanel";
 
 export default function Header() {
     const [navPanelOpen, setNavPanelOpen] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
     const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        function updateCartCount() {
+            try {
+                const cart = JSON.parse(localStorage.getItem("cart"));
+                if (cart && cart.orderedItems) {
+                    setCartCount(cart.orderedItems.reduce((sum, item) => sum + item.qty, 0));
+                } else {
+                    setCartCount(0);
+                }
+            } catch {
+                setCartCount(0);
+            }
+        }
+        updateCartCount();
+        window.addEventListener("storage", updateCartCount);
+        window.addEventListener("cartUpdated", updateCartCount);
+        return () => {
+            window.removeEventListener("storage", updateCartCount);
+            window.removeEventListener("cartUpdated", updateCartCount);
+        };
+    }, []);
 
     return (
         <header className="w-full h-[80px] fixed top-0 z-50 flex items-center justify-between px-9 bg-transparent backdrop-blur-md border-b border-white/30 text-white">
@@ -52,10 +75,13 @@ export default function Header() {
                     <>
                         <Link
                             to="/booking"
-                            className="flex items-center gap-2 px-3 py-1.5 text-white border border-white rounded hover:bg-white hover:text-[#4B3F97] transition"
+                            className="flex items-center gap-2 px-3 py-1.5 text-white border border-white rounded hover:bg-white hover:text-[#4B3F97] transition relative"
                         >
                             <FaCartShopping />
                             <span>Cart</span>
+                            {cartCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5 font-bold">{cartCount}</span>
+                            )}
                         </Link>
 
                         <button

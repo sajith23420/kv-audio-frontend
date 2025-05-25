@@ -17,8 +17,8 @@ export default function BookingPage() {
 
     function reloadCart() {
         setCart(loadCart());
-        calculateTotal ();
-       
+        calculateTotal();
+
     }
     function calculateTotal() {
         const cartInfo = loadCart();
@@ -29,16 +29,16 @@ export default function BookingPage() {
             cartInfo
         ).then((res) => {
             console.log(res.data);
-            setTotal(res.data.total); 
+            setTotal(res.data.total);
         }).catch((err) => {
             console.error(err);
             toast.error("Error fetching quote. Please try again.");
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         calculateTotal();
-    },[startDate, endDate])
+    }, [startDate, endDate])
 
     function handleBookingCreation() {
         const currentCart = loadCart();
@@ -66,62 +66,66 @@ export default function BookingPage() {
     }
 
     return (
-        <div className="w-full h-full flex flex-col items-center gap-6 p-6 bg-primary">
-            <h1 className="text-2xl font-bold text-accent mb-4">Create Booking</h1>
+        <div className="relative min-h-screen bg-cover bg-center pt-[110px] pb-10 px-4" style={{ backgroundImage: "url('/audio1.jpg')" }}>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="relative z-10 max-w-3xl mx-auto">
+                <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-10 drop-shadow-lg tracking-tight">Create Booking</h1>
 
-            {/* Date Selection */}
-            <div className="flex gap-6 items-end">
-                <div className="flex flex-col">
-                    <label className="text-accent font-medium mb-1">Start Date</label>
-                    <input
-                        type="date"
-                        className="border border-accent rounded-lg px-3 py-2 bg-white text-sm"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                    />
+                {/* Date Selection */}
+                <div className="flex flex-col md:flex-row gap-6 items-end justify-center mb-8">
+                    <div className="flex flex-col">
+                        <label className="font-medium mb-1 text-white">Start Date</label>
+                        <input
+                            type="date"
+                            className="border border-accent rounded-lg px-3 py-2 bg-white/80 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className="font-medium mb-1 text-white">End Date</label>
+                        <input
+                            type="date"
+                            className="border border-accent rounded-lg px-3 py-2 bg-white/80 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="text-sm text-white/80">
+                        <span className="font-semibold text-white">{daysBetween}</span> day(s)
+                    </div>
                 </div>
 
-                <div className="flex flex-col">
-                    <label className="text-accent font-medium mb-1">End Date</label>
-                    <input
-                        type="date"
-                        className="border border-accent rounded-lg px-3 py-2 bg-white text-sm"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
+                {/* Cart Items */}
+                <div className="w-full flex flex-col items-center justify-center mt-4">
+                    {cart.orderedItems.length === 0 ? (
+                        <div className="bg-transparent backdrop-blur-md text-white px-6 py-4 rounded-xl shadow-lg">No items in cart.</div>
+                    ) : (
+                        cart.orderedItems.map((item) => (
+                            <div className="w-full mb-4 bg-transparent backdrop-blur-md text-white p-4 rounded-xl shadow-lg flex flex-col items-center" key={item.key}>
+                                <BookingItem
+                                    itemKey={item.key}
+                                    qty={item.qty}
+                                    refresh={reloadCart}
+                                />
+                            </div>
+                        ))
+                    )}
                 </div>
 
-                <div className="text-sm text-gray-600">
-                    <span className="font-semibold">{daysBetween}</span> day(s)
+                <div className="w-full flex flex-col md:flex-row justify-center items-center mt-4 gap-4">
+                    <div className="text-lg font-semibold text-white bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl shadow-lg">Total : Rs. {total.toFixed(2)}</div>
+                    <button
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-lg font-semibold text-lg transition duration-300 mt-4 md:mt-0"
+                        onClick={handleBookingCreation}
+                        disabled={cart.orderedItems.length === 0}
+                    >
+                        Confirm Booking
+                    </button>
                 </div>
-            </div>
-
-            {/* Cart Items */}
-            <div className="w-full flex flex-col items-center justify-center mt-4">
-                {cart.orderedItems.map((item) => (
-                    <BookingItem
-                        key={item.key}
-                        itemKey={item.key}
-                        qty={item.qty}
-                        refresh={reloadCart}
-                    />
-                ))}
-            </div>
-
-            <div className="w-full flex justify-center items-center mt-4">
-                <div className="text-lg font-semibold text-accent">Total : Rs. {total.toFixed(2)}</div>
-
-
-            </div>
-
-            {/* Confirm Button */}
-            <div className="w-full flex justify-center mt-[-20px]">
-                <button
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300"
-                    onClick={handleBookingCreation}
-                >
-                    Confirm Booking
-                </button>
             </div>
         </div>
     );
