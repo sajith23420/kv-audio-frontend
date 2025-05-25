@@ -50,7 +50,7 @@ export default function Gallery() {
     }
 
     return (
-        <div className="relative min-h-screen bg-cover bg-center pt-[110px] pb-10 px-4" style={{ backgroundImage: "url('/audio1.jpg')" }}>
+        <div className="relative min-h-screen bg-gray-400 pt-[110px] pb-10 px-4">
             <div className="absolute inset-0 bg-black/50" />
             <div className="relative z-10 max-w-7xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-10 drop-shadow-lg tracking-tight">Gallery</h1>

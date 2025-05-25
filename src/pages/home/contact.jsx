@@ -1,6 +1,6 @@
 export default function Contact() {
     return (
-        <div className="relative min-h-screen bg-cover bg-center py-12" style={{ backgroundImage: "url('/audio1.jpg')" }}>
+        <div className="relative min-h-screen bg-gray-400 py-12">
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/50" />
 
