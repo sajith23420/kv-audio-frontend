@@ -58,6 +58,8 @@ export default function BookingPage() {
                 toast.success("Booking created successfully!");
                 localStorage.removeItem("cart");
                 setCart({ orderedItems: [] });
+                // Dispatch a custom event to update cart count in header
+                window.dispatchEvent(new Event("cartUpdated"));
             })
             .catch((err) => {
                 console.error(err);
