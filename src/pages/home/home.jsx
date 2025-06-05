@@ -1,4 +1,5 @@
 import { FaTruck, FaDollarSign, FaClock } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
@@ -19,9 +20,9 @@ export default function Home() {
                     <p className="text-lg md:text-xl mb-8">
                     KV Audio Rentals delivers premium sound and lighting equipment to elevate any event — from weddings to concerts. Count on our reliable gear and expert support to make your moments unforgettable.</p>
                     <div className="flex justify-center gap-4">
-                        <button className="bg-white text-[#4B3F97] font-semibold px-6 py-2 rounded-full hover:bg-gray-200 transition">
+                        <Link to="/items" className="bg-white text-[#4B3F97] font-semibold px-6 py-2 rounded-full hover:bg-gray-200 transition">
                             Book Now
-                        </button>
+                        </Link>
                         <button className="border border-white text-white font-semibold px-6 py-2 rounded-full hover:bg-white hover:text-[#4B3F97] transition">
                             See Reviews
                         </button>

@@ -74,7 +74,7 @@ export default function AdminItemsPage() {
                     setItemsLoaded(true); // Reset itemsLoaded to false after fetching
                 })
                 .catch((err) => {
-                    console.error(err); 
+                    console.error(err);
                 });
 
 
@@ -105,55 +105,74 @@ export default function AdminItemsPage() {
     };
 
     return (
-        <div className="w-full h-full p-4 relative flex  flex-col items-center">
-            {!itemsLoaded &&<div className="border-4 my-4 border-b-green-500 bg-0 w-[100px] h-[100px] rounded-full animate-spin"></div>}
-            {itemsLoaded &&<div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-200 rounded shadow-sm overflow-hidden">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="text-left p-3 border-b">Key</th>
-                            <th className="text-left p-3 border-b">Name</th>
-                            <th className="text-left p-3 border-b">Price</th>
-                            <th className="text-left p-3 border-b">Category</th>
-                            <th className="text-left p-3 border-b">Dimensions</th>
-                            <th className="text-left p-3 border-b">Availability</th>
-                            <th className="text-left p-3 border-b">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.map((product) => (
-                            <tr key={product.key} className="hover:bg-gray-50 border-b">
-                                <td className="p-3">{product.key}</td>
-                                <td className="p-3">{product.name}</td>
-                                <td className="p-3">${product.price}</td>
-                                <td className="p-3">{product.category}</td>
-                                <td className="p-3">{product.dimensions}</td>
-                                <td className="p-3">{product.availability ? "Available" : "Unavailable"}</td>
-                                <td className="p-3 border flex justify-center gap-2">
-                                    <button
-                                        onClick={() => {
-                                            navigate(`/admin/items/edit`, {state:product} )
-                                        }}
-                                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(product.key)}
-                                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
+        <div className="p-0 bg-gray-50 min-h-screen flex flex-col">
+            <div className="bg-white/60 backdrop-blur-md px-8 py-4 border-b border-gray-200 flex items-center justify-between">
+                <h1 className="text-xl font-bold text-gray-700 tracking-wide">Items Management</h1>
+                <Link to="/admin/items/add" className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded flex items-center gap-2">
+                    <CiCirclePlus className="text-2xl" /> Add Item
+                </Link>
+            </div>
+            <div className="flex-1 flex flex-col items-center justify-start w-full p-8">
+                <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-x-auto">
+                    <table className="min-w-full text-sm">
+                        <thead className="bg-gray-100">
+                            <tr>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Image</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Key</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Name</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Price</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Category</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Dimensions</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Availability</th>
+                                <th className="text-left p-3 border-b text-xs text-gray-500">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>}
-
-            <Link to="/admin/items/add">
-                <CiCirclePlus className="text-[70px] absolute right-4 bottom-4 text-gray-700 hover:text-red-600" />
-            </Link>
+                        </thead>
+                        <tbody>
+                            {!itemsLoaded ? (
+                                <tr>
+                                    <td colSpan={8} className="text-center py-8 text-gray-400 text-base">Loading items...</td>
+                                </tr>
+                            ) : items.length === 0 ? (
+                                <tr>
+                                    <td colSpan={8} className="text-center py-8 text-gray-400 text-base">No items found.</td>
+                                </tr>
+                            ) : (
+                                items.map((product, idx) => (
+                                    <tr key={product.key} className={`border-b ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-orange-50 transition-all`}>
+                                        <td className="p-3">
+                                            <img src={product.Image?.[0]} alt={product.name} className="w-14 h-14 object-cover rounded-lg border border-gray-200 shadow-sm" />
+                                        </td>
+                                        <td className="p-3 text-sm">{product.key}</td>
+                                        <td className="p-3 text-sm font-medium text-gray-700">{product.name}</td>
+                                        <td className="p-3 text-sm">${product.price}</td>
+                                        <td className="p-3 text-sm">{product.category}</td>
+                                        <td className="p-3 text-sm">{product.dimensions}</td>
+                                        <td className="p-3 text-sm">
+                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${product.availability ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>{product.availability ? 'Available' : 'Unavailable'}</span>
+                                        </td>
+                                        <td className="p-3 flex gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    navigate(`/admin/items/edit`, { state: product })
+                                                }}
+                                                className="bg-gray-700 hover:bg-gray-900 text-white px-3 py-1 rounded text-xs"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(product.key)}
+                                                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs"
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 }
