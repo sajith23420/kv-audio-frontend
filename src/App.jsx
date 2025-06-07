@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast';
 import RegisterPage from './pages/register/register';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import VerifyEmail from './pages/verifyEmail/verifyEmail';
+import AboutPage from './pages/home/about';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/admin*" element={<AdminPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/*" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
