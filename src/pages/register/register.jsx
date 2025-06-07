@@ -45,6 +45,7 @@ export default function RegisterPage() {
         <div className="bg-picture">
             <form onSubmit={handleOnSubmit} className="register-form">
                 <div className="form-container">
+                    <h2 className="form-title">Sign Up</h2>
 
                     <div className="input-group">
                         <input
