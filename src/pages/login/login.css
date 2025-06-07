@@ -1,11 +1,164 @@
 .bg-picture {
-    background-image: url('/bg.jpg');
+    background-image: url('/djmash.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: transparent;
+    font-family: 'Open Sans', sans-serif;
+    /* Example font, adjust as needed */
+    position: relative;
 }
 
+.main-title {
+    position: absolute;
+    top: 50px;
+    /* Adjust as needed */
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.form-container {
+    width: 400px;
+    height: 400px;
+    background-color: rgba(0, 18, 100, 0.7);
+    /* Darker, semi-transparent background */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.form-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.input-group {
+    position: relative;
+    width: 80%;
+    margin-bottom: 25px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 1em;
+    outline: none;
+    padding-right: 30px;
+    /* Space for icon */
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2em;
+}
+
+.register-text {
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.register-link {
+    color: #efac38;
+    /* Orange color from the image */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 180px;
+    height: 40px;
+    background-color: transparent !important;
+    color: #fff !important;
+    font-size: 0.8em !important;
+    font-weight: bold;
+    border: 2px solid #fff !important; /* Thicker border */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+    padding: 0 15px; /* Add horizontal padding */
+    letter-spacing: 1px; /* Add letter spacing */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important; /* More subtle background on hover */
+    color: #fff !important;
+    border-color: #fff !important;
+}
+
+.google-login-button {
+    background-color: transparent !important;
+    color: #fff !important;
+    margin-top: 10px;
+    border: 2px solid #fff !important; /* Thicker border */
+    font-size: 0.8em !important;
+    padding: 0 15px; /* Add horizontal padding */
+    letter-spacing: 1px; /* Add letter spacing */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow */
+    display: flex; /* Enable flexbox for icon alignment */
+    align-items: center; /* Center icon vertically */
+    justify-content: center; /* Center content horizontally */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.google-login-button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border-color: #fff !important;
+}
+
+.footer-text {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-link {
+    color: #efac38;
+    /* Orange color from the image */
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}

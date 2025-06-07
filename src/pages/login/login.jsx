@@ -2,8 +2,10 @@ import axios from "axios"
 import "./login.css"
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useGoogleLogin } from "@react-oauth/google"
+import { FaUser, FaLock } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc'; // Import Google icon
 
 export default function LoginPage() {
     const [email, setEmail] = useState("")
@@ -74,42 +76,45 @@ export default function LoginPage() {
 
 
     return (
-        <div className="bg-picture w-full h-screen flex justify-center items-center">
+        <div className="bg-picture">
+            <form onSubmit={handleOnSubmit} className="login-form">
+                <div className="form-container">
+                    <h2 className="form-title">Sign In</h2>
 
-            <form onSubmit={handleOnSubmit}>
-                <div className="w-[400px] h-[400px]  backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col relative">
-                    <img src="/logo.png" alt="logo" className="w-[150px] h-[150px] object-cover" />
+                    <div className="input-group">
+                        <input type="email" placeholder="Customer number or username"
+                            className="input-field"
+                            value={email}
+                            onChange={
+                                (e) => {
+                                    setEmail(e.target.value)
+                                }}
+                        />
+                        <FaUser className="input-icon" />
+                    </div>
 
-                    <input type="email" placeholder="Email"
-                        className="w-[300px] h-[30px] mt-6 bg-transparent border-b-2 border-white text-white text-xl outline-none"
-                        value={email}
-                        onChange={
-                            (e) => {
-                                setEmail(e.target.value)
-                            }}
+                    <div className="input-group">
+                        <input type="password" placeholder="Password"
+                            className="input-field"
+                            value={password}
+                            onChange={
+                                (e) => {
+                                    setPassword(e.target.value)
+                                }}
+                        />
+                        <FaLock className="input-icon" />
+                    </div>
 
-                    />
+                    <p className="register-text">Are you new to eBanking? <Link to="/register" className="register-link">Register here</Link></p>
 
-                    <input type="password" placeholder="Password"
-                        className="w-[300px] h-[30px] mt-6 bg-transparent border-b-2 border-white text-white text-xl outline-none"
-                        value={password}
-                        onChange={
-                            (e) => {
-                                setPassword(e.target.value)
-                            }}
+                    <button type="submit" className="login-button">LOGIN</button>
 
-                    />
-
-                    <button className="my-8 w-[300px] h-[50px] bg-yellow-500 text-black text-xl rounded-lg mt-4 hover:bg-gray-200" >Login</button>
-
-                    <button className="my-8 w-[300px] h-[50px] bg-[#efac38] text-2xl text-white rounded-lg" onClick={googleLogin}>
-                        Login with Google
+                    <button className="login-button google-login-button" onClick={googleLogin}>
+                        <FcGoogle style={{ marginLeft: '-6px', fontSize: '1.3em' }} /> Login with Google
                     </button>
-
-
-
                 </div>
             </form>
+            <p className="footer-text">© 2025 KV Login Form. All rights reserved | Design by <a href="#" className="footer-link">Sajitha Bandara</a></p>
         </div>
     )
 }

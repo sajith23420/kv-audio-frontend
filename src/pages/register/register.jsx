@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
 import "./register.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { FaUser, FaLock, FaEnvelope, FaPhone, FaAddressBook } from 'react-icons/fa'; // Import icons
 
 export default function RegisterPage() {
     const [firstName, setFirstName] = useState("");
@@ -41,62 +42,82 @@ export default function RegisterPage() {
 
 
     return (
-        <div className="bg-picture h-screen flex items-center justify-center">
-            <form onSubmit={handleOnSubmit}>
-                <div className="register-container">
-                    <img src="/logo.png" alt="logo" className="w-[150px] h-[150px] object-cover" />
+        <div className="bg-picture">
+            <form onSubmit={handleOnSubmit} className="register-form">
+                <div className="form-container">
 
-                    <input
-                        type="text"
-                        placeholder="First Name"
-                        className="input-style"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            placeholder="First Name"
+                            className="input-field"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <FaUser className="input-icon" />
+                    </div>
 
-                    <input
-                        type="text"
-                        placeholder="Last Name"
-                        className="input-style"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            placeholder="Last Name"
+                            className="input-field"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                        <FaUser className="input-icon" />
+                    </div>
 
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="input-style"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            className="input-field"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <FaEnvelope className="input-icon" />
+                    </div>
 
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        className="input-style"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="input-field"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <FaLock className="input-icon" />
+                    </div>
 
-                    <input
-                        type="text"
-                        placeholder="Address"
-                        className="input-style"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            placeholder="Address"
+                            className="input-field"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                        <FaAddressBook className="input-icon" />
+                    </div>
 
-                    <input
-                        type="text"
-                        placeholder="Phone"
-                        className="input-style"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            placeholder="Phone"
+                            className="input-field"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
+                        <FaPhone className="input-icon" />
+                    </div>
 
-                    <button className="submit-button">Register</button>
+                    <p className="register-text">Already have an account? <Link to="/login" className="register-link">Login here</Link></p>
+
+                    <button type="submit" className="login-button">Register</button>
                 </div>
             </form>
+            <p className="footer-text">© 2025 KV Register Form. All rights reserved | Design by <a href="#" className="footer-link">Sajitha Bandara</a></p>
         </div>
     );
 }

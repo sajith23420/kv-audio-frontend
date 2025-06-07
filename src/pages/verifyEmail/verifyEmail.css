@@ -1,0 +1,11 @@
+.bg-picture {
+    background: linear-gradient(to right, #00c6ff, #ee00ff);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Added for overlay positioning */
+}
