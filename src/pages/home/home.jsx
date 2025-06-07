@@ -50,12 +50,11 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* What We Do Section */}
             <section className="py-16 bg-white">
                 <div className="container mx-auto px-4 max-w-6xl">
                     <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">What We Do</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
-                        {/* Service Item 1: Model Training/Fine-tuning */}
+                    
                         <div className="p-4">
                             <div className="flex items-center mb-2">
                                 <i className="fas fa-database text-gray-500 mr-2 text-lg"></i>
@@ -66,7 +65,7 @@ export default function Home() {
                             </p>
                         </div>
 
-                        {/* Service Item 2: AI Creative Creations */}
+                       
                         <div className="p-4">
                             <div className="flex items-center mb-2">
                                 <i className="fas fa-brain text-gray-500 mr-2 text-lg"></i>
@@ -77,7 +76,6 @@ export default function Home() {
                             </p>
                         </div>
 
-                        {/* Service Item 3: AI Transformation */}
                         <div className="p-4">
                             <div className="flex items-center mb-2">
                                 <i className="fas fa-sync-alt text-gray-500 mr-2 text-lg"></i>
@@ -88,7 +86,7 @@ export default function Home() {
                             </p>
                         </div>
 
-                        {/* Service Item 4: Multi-Model Task Automation */}
+                        
                         <div className="p-4">
                             <div className="flex items-center mb-2">
                                 <i className="fas fa-robot text-gray-500 mr-2 text-lg"></i>
@@ -98,7 +96,7 @@ export default function Home() {
                             Flexible rental options and packages to match your event’s scale, theme, and technical needs.                            </p>
                         </div>
 
-                        {/* Service Item 5: AI Physical Systems */}
+                       
                         <div className="p-4">
                             <div className="flex items-center mb-2">
                                 <i className="fas fa-microchip text-gray-500 mr-2 text-lg"></i>
@@ -111,7 +109,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* New Features Section */}
+    
             <section className="py-16 bg-gray-100">
                 <div className="container mx-auto px-4 max-w-6xl">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
