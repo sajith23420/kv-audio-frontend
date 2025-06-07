@@ -1,8 +1,10 @@
 import Footer from "../../components/Footer";
+import Header from "../../components/header";
 
 export default function About() {
     return (
         <>
+            <Header />
             <section
                 className="relative w-full min-h-full flex items-center justify-center bg-cover bg-center bg-no-repeat py-20"
                 style={{ backgroundImage: "url('/djman.jpg')" }}
