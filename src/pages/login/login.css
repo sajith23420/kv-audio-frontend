@@ -162,3 +162,58 @@
 .footer-link:hover {
     text-decoration: underline;
 }
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 1.8em;
+        top: 20px;
+    }
+
+    .form-container {
+        width: 90%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .form-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        width: 95%;
+        margin-bottom: 20px;
+    }
+
+    .input-field {
+        font-size: 0.9em;
+        padding-right: 25px;
+    }
+
+    .input-icon {
+        font-size: 1em;
+    }
+
+    .register-text {
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+
+    .login-button {
+        width: 150px;
+        height: 35px;
+        font-size: 0.8em;
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+
+    .google-login-button {
+        margin-top: 8px;
+    }
+
+    .footer-text {
+        font-size: 0.7em;
+        bottom: 10px;
+    }
+}
