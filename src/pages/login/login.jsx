@@ -105,7 +105,7 @@ export default function LoginPage() {
                         <FaLock className="input-icon" />
                     </div>
 
-                    <p className="register-text">Are you new to eBanking? <Link to="/register" className="register-link">Register here</Link></p>
+                    <p className="register-text">Are you new to KV Audio? <Link to="/register" className="register-link">Register here</Link></p>
 
                     <button type="submit" className="login-button">LOGIN</button>
 
