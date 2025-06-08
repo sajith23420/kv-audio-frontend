@@ -82,7 +82,7 @@ export default function LoginPage() {
                     <h2 className="form-title">Sign In</h2>
 
                     <div className="input-group">
-                        <input type="email" placeholder="Customer number or username"
+                        <input type="email" placeholder="username/email"
                             className="input-field"
                             value={email}
                             onChange={
