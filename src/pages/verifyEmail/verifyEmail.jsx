@@ -2,7 +2,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-
+import "./verifyEmail.css"
+import { FaEnvelope } from 'react-icons/fa';
 export default function VerifyEmail() {
     const token = localStorage.getItem("token")
     const [otp, setOtp] = useState("")
@@ -38,15 +39,24 @@ export default function VerifyEmail() {
     }
 
     return (
-        <div className="w-full h-screen flex justify-center items-center">
-            <div className="w-[400px] h-[300px] bg-white shadow-lg rounded-lg flex flex-col justify-center items-center">
-                <h1 className="text-2xl font-bold ">Verify Email</h1>
-                <p className="text-gray-500">Please verify your email to continue</p>
-                <input type="number" placeholder="OTP" value={otp} onChange={(e) => setOtp(e.target.value)} className="border p-2 rounded-lg w-[80%]" />
-                <button onClick={handleVerifyEmail} className="bg-blue-600 text-white p-2 rounded-lg w-[80%]">Verify</button>
-
-            </div>
-
+        <div className="bg-picture">
+            <h1 className="main-title">KV Audio</h1>
+            <form onSubmit={(e) => { e.preventDefault(); handleVerifyEmail(); }} className="verify-form">
+                <div className="form-container">
+                    <h2 className="form-title">Verify Email</h2>
+                    <p className="register-text" style={{ color: '#fff', marginBottom: '20px' }}>Please verify your email to continue</p>
+                    <div className="input-group">
+                        <input type="number" placeholder="OTP"
+                            className="input-field"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <FaEnvelope className="input-icon" />
+                    </div>
+                    <button type="submit" className="verify-button">Verify</button>
+                </div>
+            </form>
+            <p className="footer-text">© 2025 KV Login Form. All rights reserved | Design by <a href="#" className="footer-link">Sajitha Bandara</a></p>
         </div>
     )
 }
