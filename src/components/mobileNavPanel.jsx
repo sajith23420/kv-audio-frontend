@@ -2,14 +2,34 @@ import { CiHome } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { MdContactPhone, MdHome } from "react-icons/md";
 import { MdPhotoLibrary } from "react-icons/md";
-import { FaBoxOpen } from "react-icons/fa";
+import { FaBoxOpen, FaSignInAlt, FaSignOutAlt } from "react-icons/fa"; // Import login/logout icons
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"; // Import useState and useEffect
 
 export default function MobileNavPanel(props) {
     const isOpen = props.isOpen;
     const setOpen = props.setOpen;
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+
+    useEffect(() => {
+        // Check login status when component mounts or isOpen changes
+        setIsLoggedIn(localStorage.getItem("token") ? true : false);
+    }, [isOpen]);
+
+    function goTo(route) {
+        navigate(route);
+        setOpen(false);
+    }
+
+    function handleLogout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role"); // Assuming role is also stored
+        setIsLoggedIn(false);
+        navigate("/"); // Redirect to home or login page after logout
+        setOpen(false);
+    }
 
     function goTo(route) {
         navigate(route);
@@ -73,6 +93,23 @@ export default function MobileNavPanel(props) {
                             <FaRegCalendarCheck />
                             Booking
                         </div>
+                        {isLoggedIn ? (
+                            <div
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 p-3 hover:bg-accent/10 cursor-pointer"
+                            >
+                                <FaSignOutAlt />
+                                Logout
+                            </div>
+                        ) : (
+                            <div
+                                onClick={() => goTo("/login")}
+                                className="flex items-center gap-2 p-3 hover:bg-accent/10 cursor-pointer"
+                            >
+                                <FaSignInAlt />
+                                Login
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
