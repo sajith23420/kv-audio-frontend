@@ -139,7 +139,7 @@ export default function AdminPage() {
               )}
             </button>
             {showNotif && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+              <div className="absolute right-0 mt-2 w-45 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                 <div className="p-3 border-b font-semibold text-gray-700 flex justify-between items-center">
                   New Orders
                   <button className="text-xs text-blue-500 hover:underline" onClick={() => {
