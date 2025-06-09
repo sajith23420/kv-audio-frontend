@@ -122,7 +122,7 @@ export default function AdminPage() {
           >
             <HiMenuAlt3 />
           </button>
-          <span className="font-bold text-lg text-gray-700">KV Audio Admin</span>
+          <span className="font-bold text-lg text-gray-700">KV Admin</span>
         </div>
         <div className="flex items-center gap-4">
           <Link to="/admin/inquiries">
