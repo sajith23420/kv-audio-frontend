@@ -6,6 +6,7 @@ import { FaBoxOpen, FaSignInAlt, FaSignOutAlt } from "react-icons/fa"; // Import
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react"; // Import useState and useEffect
+import { FaCartShopping } from "react-icons/fa6";
 
 export default function MobileNavPanel(props) {
     const isOpen = props.isOpen;
@@ -90,8 +91,8 @@ export default function MobileNavPanel(props) {
                             onClick={() => goTo("/booking")}
                             className="flex items-center gap-2 p-3 hover:bg-accent/10 cursor-pointer"
                         >
-                            <FaRegCalendarCheck />
-                            Booking
+                            <FaCartShopping />
+                            Cart
                         </div>
                         {isLoggedIn ? (
                             <div

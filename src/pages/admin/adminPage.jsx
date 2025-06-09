@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import InquiriesIcon from "../../components/inquiriesIcon";
 import Inquiries from "./inquiries.jsx"; // Import Inquiries component with extension
+import AdminMobileNavPanel from "../../components/adminMobileNavPanel"; // Import the new component
+import { HiMenuAlt3 } from "react-icons/hi"; // Import an icon for the mobile menu
 
 export default function AdminPage() {
   const [userValidated, setUserValidated] = useState(false);
@@ -24,6 +26,7 @@ export default function AdminPage() {
   const [showNotif, setShowNotif] = useState(false);
   const [newOrders, setNewOrders] = useState([]);
   const [notifCount, setNotifCount] = useState(0);
+  const [showMobileNav, setShowMobileNav] = useState(false); // New state for mobile nav
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -113,6 +116,12 @@ export default function AdminPage() {
       {/* Top Bar */}
       <div className="w-full h-14 bg-white/30 backdrop-blur-md flex items-center justify-between px-6 shadow-sm z-20">
         <div className="flex items-center gap-4">
+          <button
+            className="md:hidden text-gray-700 text-2xl mr-2"
+            onClick={() => setShowMobileNav(true)}
+          >
+            <HiMenuAlt3 />
+          </button>
           <span className="font-bold text-lg text-gray-700">KV Audio Admin</span>
         </div>
         <div className="flex items-center gap-4">
@@ -172,7 +181,7 @@ export default function AdminPage() {
       </div>
       <div className="flex flex-1 min-h-0">
         {/* Sidebar */}
-        <aside className="w-56 bg-gray-800 text-white flex flex-col py-6 px-2 h-full">
+        <aside className="w-56 bg-gray-800 text-white flex-col py-6 px-2 h-full hidden md:flex"> {/* Added hidden md:flex */}
           <nav className="flex flex-col gap-2 mt-4">
             {navLinks.map((link) => (
               <Link
@@ -216,6 +225,13 @@ export default function AdminPage() {
           )}
         </main>
       </div>
+      {showMobileNav && (
+        <AdminMobileNavPanel
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onClose={() => setShowMobileNav(false)}
+        />
+      )}
     </div>
   );
 }
