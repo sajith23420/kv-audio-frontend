@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ImageSlider from "../../components/imageSlider";
 import { addToCart, loadCart } from "../../utils/cart";
 import Footer from "../../components/Footer"; // Import the Footer component
@@ -8,8 +8,10 @@ import Footer from "../../components/Footer"; // Import the Footer component
 export default function ProductOverview() {
     const params = useParams();
     const key = params.key;
+    const navigate = useNavigate();
     const [loadingStatus, setLoadingStatus] = useState("loading");
     const [product, setProduct] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("token") ? true : false);
 
     useEffect(() => {
         axios
@@ -70,8 +72,12 @@ export default function ProductOverview() {
                                         <button
                                             className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 w-fit"
                                             onClick={() => {
-                                                addToCart(product.key, 1);
-                                                console.log(loadCart());
+                                                if (isLoggedIn) {
+                                                    addToCart(product.key, 1);
+                                                    console.log(loadCart());
+                                                } else {
+                                                    navigate("/login");
+                                                }
                                             }}
                                         >
                                             Add to Cart

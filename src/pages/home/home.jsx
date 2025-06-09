@@ -1,8 +1,26 @@
-import { Link } from "react-router-dom";
-import { FaTruck, FaDollarSign, FaHeadphones } from "react-icons/fa"; // Import icons
+import { Link, useNavigate } from "react-router-dom";
+import { FaTruck, FaDollarSign, FaHeadphones, FaBars, FaTimes } from "react-icons/fa"; // Import icons
 import Footer from "../../components/Footer"; // Import the Footer component
+import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("token") ? true : false);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const navRef = useRef();
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (navRef.current && !navRef.current.contains(event.target)) {
+                setShowMobileMenu(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [navRef]);
+
     return (
         <>
             {/* Hero Section */}
@@ -14,9 +32,18 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-b from-[#4B3F97]/80 to-[#2d1457]/90 z-0" />
 
                 {/* Top Navbar */}
-                <nav className="absolute top-0 left-0 w-full flex items-center justify-between px-12 py-6 z-10">
+                <nav ref={navRef} className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-10">
                     <div className="text-3xl font-bold text-white tracking-widest">DJoz</div>
-                    <ul className="flex gap-8 text-white/90 text-lg font-medium">
+
+                    {/* Mobile Menu Button */}
+                    <div className="md:hidden flex items-center gap-4">
+                        <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="text-white text-2xl focus:outline-none">
+                            {showMobileMenu ? <FaTimes /> : <FaBars />}
+                        </button>
+                    </div>
+
+                    {/* Desktop Menu */}
+                    <ul className="hidden md:flex gap-8 text-white/90 text-lg font-medium">
                         <li><Link to="/" className="border-b-2 border-white">HOME</Link></li>
                         <li><a href="#about">ABOUT</a></li>
                         <li><a href="#discography">DISCOGRAPHY</a></li>
@@ -25,28 +52,55 @@ export default function Home() {
                         <li><a href="#pages">PAGES</a></li>
                         <li><Link to="/contact">CONTACT</Link></li>
                     </ul>
-                    <div className="flex gap-4 text-white text-xl">
+                    <div className="hidden md:flex gap-4 text-white text-xl">
                         <a href="#"><i className="fab fa-facebook-f"></i></a>
                         <a href="#"><i className="fab fa-twitter"></i></a>
                         <a href="#"><i className="fab fa-instagram"></i></a>
                         <a href="#"><i className="fab fa-spotify"></i></a>
                     </div>
+
+                    {/* Mobile Menu Overlay */}
+                    {showMobileMenu && (
+                        <div className="md:hidden absolute top-full left-0 w-full bg-[#2d1457] bg-opacity-95 shadow-lg py-4 transition-all duration-300 ease-in-out transform origin-top">
+                            <ul className="flex flex-col items-center gap-4 text-white/90 text-lg font-medium">
+                                <li><Link to="/" className="border-b-2 border-white" onClick={() => setShowMobileMenu(false)}>HOME</Link></li>
+                                <li><a href="#about" onClick={() => setShowMobileMenu(false)}>ABOUT</a></li>
+                                <li><a href="#discography" onClick={() => setShowMobileMenu(false)}>DISCOGRAPHY</a></li>
+                                <li><a href="#tours" onClick={() => setShowMobileMenu(false)}>TOURS</a></li>
+                                <li><a href="#videos" onClick={() => setShowMobileMenu(false)}>VIDEOS</a></li>
+                                <li><a href="#pages" onClick={() => setShowMobileMenu(false)}>PAGES</a></li>
+                                <li><Link to="/contact" onClick={() => setShowMobileMenu(false)}>CONTACT</Link></li>
+                            </ul>
+                            <div className="flex justify-center gap-4 text-white text-xl mt-4">
+                                <a href="#"><i className="fab fa-facebook-f"></i></a>
+                                <a href="#"><i className="fab fa-twitter"></i></a>
+                                <a href="#"><i className="fab fa-instagram"></i></a>
+                                <a href="#"><i className="fab fa-spotify"></i></a>
+                            </div>
+                        </div>
+                    )}
                 </nav>
 
                 {/* Hero Content */}
-                <div className="relative z-10 flex flex-col items-center justify-center text-center mt-24">
+                <div className="relative z-10 flex flex-col items-center justify-center text-center mt-24 px-6">
                     <span className="uppercase tracking-widest text-white/80 text-sm mb-4">We made your</span>
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6 font-handwriting" style={{ fontFamily: 'cursive' }}>
+                    <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 font-handwriting" style={{ fontFamily: 'cursive' }}>
                         EVENT MEMORABLE
                     </h1>
-                    <p className="text-white/80 max-w-xl mb-8 text-lg">
+                    <p className="text-white/80 max-w-xl mb-8 text-base md:text-lg">
                         KV Audio delivers powerful sound and dazzling lights for events of every size. Whether it's a small party or a large celebration, count on us to elevate your experience with reliable gear and professional service.                    </p>
-                    <Link
-                        to="/items"
+                    <button
+                        onClick={() => {
+                            if (isLoggedIn) {
+                                navigate("/items");
+                            } else {
+                                navigate("/login");
+                            }
+                        }}
                         className="bg-transparent border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white hover:text-[#4B3F97] transition text-lg shadow-lg mt-4"
                     >
                         Book Now
-                    </Link>
+                    </button>
                 </div>
             </section>
 
